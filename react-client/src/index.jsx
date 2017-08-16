@@ -1,59 +1,53 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
-import List from './components/List.jsx';
+import { BrowserRouter as Router, Route, Link, Redirect } from 'react-router-dom';
+import Balance from './components/Balance.jsx';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
+    this.state = { 
       address: '',
+      userData: {},
     }
-    this.onSubmit = this.onSubmit.bind(this);
-    this.onInputChange = this.onInputChange.bind(this);
+    this.handleInputChange = this.handleInputChange.bind(this);
+    this.handleGetRequest = this.handleGetRequest.bind(this);
   }
 
-  // componentDidMount() {
-    
-  // }
+  handleInputChange(e){
+    this.setState({address: e.target.address});
+  }
 
-  onSubmit() {
-    //send ajax call with address to API
-    console.log('state:', this.state.address);
+  handleGetRequest(){
     $.get({
-      url: `http://jobcoin.projecticeland.net/dinosaur/api/addresses/${this.state.address}`,
-      success: (data) => {
-        console.log('got data back!', data);
-      },
-      error: (err) => {
-        console.log('err', err);
+      url: `http://jobcoin.projecticeland.net/dinosaur/api/addresses/${this.state.value}`,
+      success: function (data) {
+        console.log('success',data);
+        this.setState({ userData: data});
+      }.bind(this),
+      error: function (err) {
+        console.log('err', err)
       }
     })
-    //take you to next screen
-  }
-
-  onInputChange(event) {
-    console.log('name', event.target.value);
-    this.setState({
-      address: event.target.value,
-    });
-  }
+  };
 
   render () {
-    return (<div>
-      <h1>Item List</h1>
-      <h1> Kai Yu</h1>
-
+    return (
       <div>
-        <p>Welcome! Sign in with your Job Coin Address</p>
+        <Router>
+          <div>
+            <h3> Welcome! Sign in with your JobCoin Address </h3>
+            <p> JobCoin Address </p>
 
-        <form>
-          <input type="text" onChange={this.onInputChange} value={this.state.address}/>
-          <button onClick={this.onSubmit} >Sign In</button>
-        </form>
+            <input type="text" name="name" onChange={this.handleInputChange} value={this.state.address}/>
+            <button onClick={this.handleGetRequest}>Submit</button>
+            <Route path="/Balance" component={Balance}/>
+            {/*<Link to="/Balance" onClick={this.handleGetRequest} value={this.state.address}>Submit</Link>*/}
+          </div>
+        </Router>
       </div>
-
-    </div>)
+    )
   }
 }
 
