@@ -1,5 +1,5 @@
 body {
-  padding: 20px;
+  padding: 50px;
 }
 
 button {
@@ -20,24 +20,16 @@ button {
   overflow: auto;
 }
 
-.topnav {
+.nav {
   border: 1px solid darkgrey;
-  border-radius: 5px;
   overflow: hidden;
-  /*background-color: red;*/
+  border-radius: 5px;
 }
 
-.topnav h4 {
-  float: left;
+.nav li {
+  border-radius: 5px;
+  /*border: 1px solid darkgrey;*/
   padding: 10px 10px;
-  display: block;
-
-}
-
-.topnav button {
-  /*display: block;*/
-  float: right;
-  text-align: center;
   margin: 10px;
 }
 
@@ -46,20 +38,28 @@ button {
   border-radius: 5px;
   float:left;
   height: 100px;
-  width: 150px;
-  
+  width: 200px;
+  display: block;
+  padding: 20px;
+  text-align: center;
 }
 
 .sendcoin {
   border: 1px solid darkgrey;
   border-radius: 5px;
   float:left;
-  height: 100px;
-  width: 150px;
+  height: 250px;
+  width: 200px;
+  display: block;
+  padding: 20px;
+  text-align: center;
 }
+
 
 .chart {
   border: 1px solid darkgrey;
   border-radius: 5px;
   float: right;
+  display: block;
+  
 }

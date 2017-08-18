@@ -27,7 +27,6 @@ class App extends React.Component {
   }
 
   onInputChange(e) {
-    console.log('changing', e.target.name, 'to: ', e.target.value);
     const name = e.target.name;
     this.setState({
       [name]: e.target.value
@@ -35,19 +34,15 @@ class App extends React.Component {
   }
 
   handleSignout() {
-    console.log('signing out')
     this.setState(this.initialState);
   }
 
   handleSendCoin(){
-    console.log('sending coin');
     var data = {
       fromAddress: this.state.address,
       toAddress: this.state.sendingUserName,
       amount: this.state.sendingCoinAmount
     };
-    console.log('data', data);
-
     $.post({
       url: "http://jobcoin.projecticeland.net/dinosaur/api/transactions",
       data: data,

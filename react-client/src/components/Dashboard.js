@@ -5,27 +5,36 @@ const Dashboard = (props)=>{
   return (
     <div>
 
-      <div className="topnav">
-        <h4> Welcome {props.address}! </h4>
-        {/*icon ??*/}
-        <button id="button-signout" onClick={props.signout}>Sign Out</button>
-      </div>
+      <nav className="navbar navbar-default">
+        <div className="container-fluid">
+          <ul className="nav navbar-nav">
+            <li className="active">Welcome {props.address}!</li>
+          </ul>
+          <ul className="nav navbar-nav navbar-right">
+            <li><span className="glyphicon glyphicon-user"></span> Logged In</li>
+            <li onClick={props.signout}><span className="glyphicon glyphicon-log-out"></span> Sign Out</li>
+          </ul>
+        </div>
+      </nav>
 
-      <div className="balance">
-        <h4> JobCoin Balance </h4>
-        <h4> {props.userData.balance} </h4>
-      </div>
+      <div>
+        <div className="balance">
+          <p> JobCoin Balance </p>
+          <p> {props.userData.balance} </p>
+        </div>
 
-      <div className="sendcoin">
-        <h2> Send JobCoin </h2>
-        Destination Address:<input type="text" name={'sendingUserName'} onChange={props.onInputChange.bind(this)} value={props.destination}/>
-        Amount to send:<input type="text" name={'sendingCoinAmount'} onChange={props.onInputChange.bind(this)} value={props.amount}/>
-        <button onClick={props.sendCoin}> Send JobCoin </button>
-      </div>
+        <div className="sendcoin">
+          <p> Send JobCoin </p>
+          Destination Address:<input type="text" name={'sendingUserName'} onChange={props.onInputChange.bind(this)} value={props.destination}/>
+          Amount to send:<input type="text" name={'sendingCoinAmount'} onChange={props.onInputChange.bind(this)} value={props.amount}/>
+          <button onClick={props.sendCoin}> Send JobCoin </button>
+        </div>
 
-      <div className="chart">
-        <h4>JobCoin History Graph</h4>
-        <ChartComponent chartData={props.chartData}/>
+        <div className="chart">
+          <p>JobCoin History Graph</p>
+          <ChartComponent chartData={props.chartData}/>
+        </div>
+
       </div>
 
     </div>
