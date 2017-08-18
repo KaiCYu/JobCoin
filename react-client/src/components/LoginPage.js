@@ -19,27 +19,21 @@ class LoginPage extends React.Component {
     }
 
     this.initialState = this.state;
-    this.handleInputChange = this.handleInputChange.bind(this);
     this.handleGetRequest = this.handleGetRequest.bind(this);
-    this.handleUserChange = this.handleUserChange.bind(this);
     this.handleSendCoin = this.handleSendCoin.bind(this);
-    this.handleCoinChange = this.handleCoinChange.bind(this);
     this.handleSignout = this.handleSignout.bind(this);
     this.transformDataForChart = this.transformDataForChart.bind(this);
+    this.onInputChange = this.onInputChange.bind(this);
   }
 
-  handleInputChange(e){
-    this.setState({address: e.target.value});
-  }
-  handleUserChange(e){
-    this.setState({sendingUserName: e.target.value});
-  }
-  handleCoinChange(e){
-    this.setState({sendingCoinNumber: e.target.value})
+  onInputChange(e) {
+    const name = e.target.name;
+    this.setState({
+      [name]: e.target.value,
+    });
   }
 
   handleSignout() {
-    console.log('signing out... setting state to:', this.initialState);
     this.setState(this.initialState);
   }
 
@@ -70,19 +64,12 @@ class LoginPage extends React.Component {
       labels: [],   //x labels transactions (timestamps)
       datasets: [
         {
-          label: `Amount vs Time for ${this.state.address}`,
-          fill: true,
-          pointHoverRadius: 5,
-          pointRadius: 1,
-          pointHitRadius: 10,
           data: [], //y values $(amount)
-          spanGaps: false,
         }
       ]
     };
 
     let amount = Number.parseInt(dataset.transactions[0].amount);  //intial amount
-    // console.log('initial amount', amount);
     for (var i = 1; i < dataset.transactions.length; i++) {
       //sending (subract from amount)
       if (dataset.transactions[i].fromAddress === this.state.address) {
@@ -99,7 +86,6 @@ class LoginPage extends React.Component {
       result.labels.push(formattedDate);
     }
 
-    // console.log(result);
     return result;
   }
 
@@ -124,7 +110,7 @@ class LoginPage extends React.Component {
           <div>
             <h3> Welcome! Sign in with your JobCoin Address </h3>
             <p> JobCoin Address </p>
-            <input type="text" onChange={this.handleInputChange} value={this.state.address}/>
+            <input type="text" name={'address'} onChange={this.onInputChange} value={this.state.address}/>
             <button onClick={this.handleGetRequest}>Sign In </button>
           </div>
         )
@@ -140,12 +126,12 @@ class LoginPage extends React.Component {
             </div>
             <div>
               <h2> Send JobCoin </h2>
-              Destination Address:<input type="text" onChange={this.handleUserChange} value={this.state.sendingUserName}/>
-              Amount to send:<input type="text" onChange={this.handleCoinChange} value={this.state.sendingCoinNumber}/>
+              Destination Address:<input type="text" name={'sendingUserName'} onChange={this.onInputChange} value={this.state.sendingUserName}/>
+              Amount to send:<input type="text" name={'sendingCoinNumber'} onChange={this.onInputChange} value={this.state.sendingCoinNumber}/>
               <button onClick={this.handleSendCoin}> Send JobCoin </button>
             </div>
 
-            <ChartComponent chartData={this.state.chartData} options={null}/>
+            <ChartComponent chartData={this.state.chartData}/>
           </div>
         )
       }

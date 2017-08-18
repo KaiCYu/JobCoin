@@ -5,9 +5,27 @@ import {Line as LineChart} from 'react-chartjs';
 // var LineChart = require("react-chartjs").Line;
 //TODO: change dataset, pass into Chart component
 const ChartComponent = (props)=>{
+  // const chartOptions = {
+  //   legend: {
+  //     display: true,
+  //     position: 'top',
+  //   },
+  //   title: {
+  //     display: true,
+  //     position: 'top',
+  //   }
+  //   // xAxisID: 'Time of Transactions',
+  //   // yAxisID: 'Amount Balance',
+  //   // label: 'Amount vs Time',
+  //   // fill: false,
+  //   // pointHoverRadius: 5,
+  //   // pointRadius: 1,
+  //   // pointHitRadius: 10,
+  //   // spanGaps: false,
+  // }
+
   return (
     <div>
-      {/*{console.log('chart props', props.chartData)}*/}
       <LineChart data={props.chartData} options={null} width="600" height="400"/> 
     </div>
   )
