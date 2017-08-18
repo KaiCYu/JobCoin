@@ -18,10 +18,12 @@
   },
   "dependencies": {
     "body-parser": "^1.17.2",
+    "chart.js": "^1.1.1",
     "express": "^4.15.0",
     "jquery": "^3.1.1",
-    "react": "^15.4.2",
-    "react-dom": "^15.4.2",
+    "react": "^15.6.1",
+    "react-chartjs": "^0.8.0",
+    "react-dom": "^15.6.1",
     "react-router-dom": "^4.1.2"
   }
 }
