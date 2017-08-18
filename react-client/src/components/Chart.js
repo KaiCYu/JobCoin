@@ -2,8 +2,6 @@ import React from 'react';
 import chartJS from 'react-chartjs';
 import {Line as LineChart} from 'react-chartjs';
 
-// var LineChart = require("react-chartjs").Line;
-//TODO: change dataset, pass into Chart component
 const ChartComponent = (props)=>{
   // const chartOptions = {
   //   legend: {

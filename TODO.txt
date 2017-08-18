@@ -2,5 +2,4 @@ TODO:
 
 - style up css, format the layout
 - separate out components
-- refactor handle change functions 
 - fix chart axes, labels, options
