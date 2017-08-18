@@ -95,13 +95,8 @@ class LoginPage extends React.Component {
       result.datasets[0].data.push(amount);
       //add timestamps to result (x axis)
 
-      // console.log('converted timestamp', moment(dataset.transactions[i].timestamp));
-      // let formatted = moment(dataset.transactions[i].timestamp, 'YYYY-MM-DD hh:mm:ss')._d;
-      
-      // console.log('formmated', formatted);
-
-      // result.labels.push(dataset.transactions[i].timestamp);
-      result.labels.push(moment(dataset.transactions[i].timestamp, 'YYYY-MM-DD hh:mm:ss')._d);
+      let formattedDate = moment(dataset.transactions[i].timestamp).format('YYYY-MM-DD hh:mm');
+      result.labels.push(formattedDate);
     }
 
     // console.log(result);
