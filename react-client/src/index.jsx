@@ -1,8 +1,10 @@
 import $ from 'jquery';
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ChartComponent from './components/Chart';
 import moment from 'moment';
+import ChartComponent from './components/Chart';
+import SignIn from './components/SignIn.js';
+import Balance from './components/Balance.js';
 
 class App extends React.Component {
   constructor(props) {
@@ -11,7 +13,7 @@ class App extends React.Component {
       address: '',
       loggedIn: false,
       sendingUserName: '',
-      sendingCoinNumber: '',
+      sendingCoinAmount: '',
       userData: {},   //data from ajax
       chartData: {},  //transformed data
     }
@@ -25,22 +27,26 @@ class App extends React.Component {
   }
 
   onInputChange(e) {
+    console.log('changing', e.target.name, 'to: ', e.target.value);
     const name = e.target.name;
     this.setState({
-      [name]: e.target.value,
+      [name]: e.target.value
     });
   }
 
   handleSignout() {
+    console.log('signing out')
     this.setState(this.initialState);
   }
 
   handleSendCoin(){
+    console.log('sending coin');
     var data = {
       fromAddress: this.state.address,
       toAddress: this.state.sendingUserName,
-      amount: this.state.sendingCoinNumber
+      amount: this.state.sendingCoinAmount
     };
+    console.log('data', data);
 
     $.post({
       url: "http://jobcoin.projecticeland.net/dinosaur/api/transactions",
@@ -48,7 +54,7 @@ class App extends React.Component {
       success: (success)=>{
         console.log('sent coins', success);
         this.handleGetRequest();
-        this.setState({sendingUserName: '', sendingCoinNumber: ''});
+        this.setState({sendingUserName: '', sendingCoinAmount: ''});
       }, 
       error: (error)=>{
         console.log('ERROR', error)
@@ -82,11 +88,11 @@ class App extends React.Component {
       let formattedDate = moment(dataset.transactions[i].timestamp).format('YYYY-MM-DD hh:mm');
       result.labels.push(formattedDate);
     }
-
     return result;
   }
 
   handleGetRequest(){
+    console.log('getting request')
     $.get({
       url: `http://jobcoin.projecticeland.net/dinosaur/api/addresses/${this.state.address}`,
       success: function (data) {
@@ -104,32 +110,12 @@ class App extends React.Component {
       //not logged in
       { if(!this.state.loggedIn){
         return (
-          <div>
-            <h3> Welcome! Sign in with your JobCoin Address </h3>
-            <p> JobCoin Address </p>
-            <input type="text" name={'address'} onChange={this.onInputChange} value={this.state.address}/>
-            <button onClick={this.handleGetRequest}>Sign In </button>
-          </div>
+          <SignIn onChange={this.onInputChange} address={this.state.address} handleGetRequest={this.handleGetRequest}/>
         )
       //logged in
       } else {
         return (
-          <div>
-            <div>
-              <button onClick={this.handleSignout}> Sign Out </button>
-              <h1> Welcome {this.state.address}! </h1>
-              <h2> JobCoin Balance </h2>
-              <h2> {this.state.userData.balance} </h2>
-            </div>
-            <div>
-              <h2> Send JobCoin </h2>
-              Destination Address:<input type="text" name={'sendingUserName'} onChange={this.onInputChange} value={this.state.sendingUserName}/>
-              Amount to send:<input type="text" name={'sendingCoinNumber'} onChange={this.onInputChange} value={this.state.sendingCoinNumber}/>
-              <button onClick={this.handleSendCoin}> Send JobCoin </button>
-            </div>
-
-            <ChartComponent chartData={this.state.chartData}/>
-          </div>
+          <Balance onInputChange={this.onInputChange} signout={this.handleSignout} sendCoin={this.handleSendCoin} address={this.state.address} userData={this.state.userData} amount={this.state.sendingCoinAmount} destination={this.state.sendingUserName}  chartData={this.state.chartData}/>
         )
       }
     }
