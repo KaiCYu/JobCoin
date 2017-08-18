@@ -32,21 +32,26 @@ button {
   margin: 10px;
 }
 
+.content {
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-direction: row;
+  flex-direction: row;
+}
+
 .col-one {
-  background-color: red;
+  order:1;
 }
 
 .col-two {
-  background-color: blue;
+  order:2;
 }
 
 .balance {
   border: 1px solid darkgrey;
   border-radius: 5px;
-  /*float:left;*/
   height: 100px;
   width: 200px;
-  display: block;
   padding: 20px;
   text-align: center;
   margin: 10px;
@@ -55,7 +60,6 @@ button {
 .sendcoin {
   border: 1px solid darkgrey;
   border-radius: 5px;
-  /*float:left;*/
   height: 250px;
   width: 200px;
   display: block;
@@ -71,8 +75,5 @@ button {
 .chart {
   border: 1px solid darkgrey;
   border-radius: 5px;
-  /*float: right;*/
   display: block;
-  width: 600px;
-  height: 500px;
 }

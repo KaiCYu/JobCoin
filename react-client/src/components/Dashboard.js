@@ -17,32 +17,27 @@ const Dashboard = (props)=>{
         </div>
       </nav>
 
-      <div className="container-fluid">
-        <div className="row">
-
-          <div className="col col-one" >
-            <div className="balance">
-              <p> JobCoin Balance </p>
-              <p> {props.userData.balance} </p>
-            </div>
-
-            <div className="sendcoin">
-              <p> Send JobCoin </p>
-              Destination Address:<input type="text" name={'sendingUserName'} onChange={props.onInputChange.bind(this)} value={props.destination}/>
-              Amount to send:<input type="text" name={'sendingCoinAmount'} onChange={props.onInputChange.bind(this)} value={props.amount}/>
-              <button onClick={props.sendCoin}> Send JobCoin </button>
-            </div>
+      <div className="container-fluid content">
+        <div className="col-one">
+          <div className="balance">
+            <p> JobCoin Balance </p>
+            <p> {props.userData.balance} </p>
           </div>
 
-          <div className="col col-two">
-            <div className="chart">
-              <p>JobCoin History Graph</p>
-              <ChartComponent chartData={props.chartData}/>
-            </div>
+          <div className="sendcoin">
+            <p> Send JobCoin </p>
+            Destination Address:<input type="text" name={'sendingUserName'} onChange={props.onInputChange.bind(this)} value={props.destination}/>
+            Amount to send:<input type="text" name={'sendingCoinAmount'} onChange={props.onInputChange.bind(this)} value={props.amount}/>
+            <button onClick={props.sendCoin}> Send JobCoin </button>
           </div>
-
         </div>
-
+        
+        <div className="col-two">
+          <div className="chart">
+            <p>JobCoin History Graph</p>
+            <ChartComponent chartData={props.chartData}/>
+          </div>
+        </div>
       </div>
 
     </div>
