@@ -9,12 +9,12 @@ class LoginPage extends React.Component {
   constructor(props) {
     super(props);
     this.state = { 
-      value: '',
+      address: '',
       loggedIn: false,
       sendingUserName: '',
       sendingCoinNumber: '',
-      userData: {},
-      chartData: {},
+      userData: {},   //data from ajax
+      chartData: {},  //transformed data
     }
 
     this.initialState = this.state;
@@ -23,11 +23,12 @@ class LoginPage extends React.Component {
     this.handleUserChange = this.handleUserChange.bind(this);
     this.handleSendCoin = this.handleSendCoin.bind(this);
     this.handleCoinChange = this.handleCoinChange.bind(this);
+    this.handleSignout = this.handleSignout.bind(this);
     this.transformDataForChart = this.transformDataForChart.bind(this);
   }
 
   handleInputChange(e){
-    this.setState({value: e.target.value});
+    this.setState({address: e.target.value});
   }
   handleUserChange(e){
     this.setState({sendingUserName: e.target.value});
@@ -37,12 +38,13 @@ class LoginPage extends React.Component {
   }
 
   handleSignout() {
+    console.log('signing out... setting state to:', this.initialState);
     this.setState(this.initialState);
   }
 
   handleSendCoin(){
     var data = {
-      fromAddress: this.state.value,
+      fromAddress: this.state.address,
       toAddress: this.state.sendingUserName,
       amount: this.state.sendingCoinNumber
     };
@@ -64,7 +66,7 @@ class LoginPage extends React.Component {
       labels: [],   //x labels transactions (timestamps)
       datasets: [
         {
-          label: `Amount vs Time for ${this.state.value}`,
+          label: `Amount vs Time for ${this.state.address}`,
           fill: true,
           pointHoverRadius: 5,
           pointRadius: 1,
@@ -79,7 +81,7 @@ class LoginPage extends React.Component {
     // console.log('initial amount', amount);
     for (var i = 1; i < dataset.transactions.length; i++) {
       //sending (subract from amount)
-      if (dataset.transactions[i].fromAddress === this.state.value) {
+      if (dataset.transactions[i].fromAddress === this.state.address) {
         amount -= Number.parseInt(dataset.transactions[i].amount);
       //receiving (add to amount)
       } else {
@@ -96,7 +98,7 @@ class LoginPage extends React.Component {
 
   handleGetRequest(){
     $.get({
-      url: `http://jobcoin.projecticeland.net/dinosaur/api/addresses/${this.state.value}`,
+      url: `http://jobcoin.projecticeland.net/dinosaur/api/addresses/${this.state.address}`,
       success: function (data) {
         // console.log('data back from ajax', data);
         let transformed = this.transformDataForChart(data);
@@ -116,7 +118,7 @@ class LoginPage extends React.Component {
           <div>
             <h3> Welcome! Sign in with your JobCoin Address </h3>
             <p> JobCoin Address </p>
-            <input type="text" onChange={this.handleInputChange} value={this.state.value}/>
+            <input type="text" onChange={this.handleInputChange} value={this.state.address}/>
             <button onClick={this.handleGetRequest}>Sign In </button>
           </div>
         )
@@ -126,14 +128,14 @@ class LoginPage extends React.Component {
           <div>
             <div>
               <button onClick={this.handleSignout}> Sign Out </button>
-              <h1> Welcome User: {this.state.value} </h1>
+              <h1> Welcome {this.state.address}! </h1>
               <h2> JobCoin Balance </h2>
               <h2> {this.state.userData.balance} </h2>
             </div>
             <div>
               <h2> Send JobCoin </h2>
-              To:<input type="text" onChange={this.handleUserChange} value={this.state.sendingUserName}/>
-              Amount:<input type="text" onChange={this.handleCoinChange} value={this.state.sendingCoinNumber}/>
+              Destination Address:<input type="text" onChange={this.handleUserChange} value={this.state.sendingUserName}/>
+              Amount to send:<input type="text" onChange={this.handleCoinChange} value={this.state.sendingCoinNumber}/>
               <button onClick={this.handleSendCoin}> Send JobCoin </button>
             </div>
 
