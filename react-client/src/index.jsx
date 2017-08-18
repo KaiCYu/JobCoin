@@ -66,22 +66,23 @@ class App extends React.Component {
         }
       ]
     };
+    if (dataset.transactions.length !== 0) {
+      let amount = Number.parseInt(dataset.transactions[0].amount);  //intial amount
+      for (var i = 1; i < dataset.transactions.length; i++) {
+        //sending (subract from amount)
+        if (dataset.transactions[i].fromAddress === this.state.address) {
+          amount -= Number.parseInt(dataset.transactions[i].amount);
+        //receiving (add to amount)
+        } else {
+          amount += Number.parseInt(dataset.transactions[i].amount);
+        }
+        //add amount to result (y axis)
+        result.datasets[0].data.push(amount);
+        //add timestamps to result (x axis)
 
-    let amount = Number.parseInt(dataset.transactions[0].amount);  //intial amount
-    for (var i = 1; i < dataset.transactions.length; i++) {
-      //sending (subract from amount)
-      if (dataset.transactions[i].fromAddress === this.state.address) {
-        amount -= Number.parseInt(dataset.transactions[i].amount);
-      //receiving (add to amount)
-      } else {
-        amount += Number.parseInt(dataset.transactions[i].amount);
+        let formattedDate = moment(dataset.transactions[i].timestamp).format('YYYY-MM-DD hh:mm');
+        result.labels.push(formattedDate);
       }
-      //add amount to result (y axis)
-      result.datasets[0].data.push(amount);
-      //add timestamps to result (x axis)
-
-      let formattedDate = moment(dataset.transactions[i].timestamp).format('YYYY-MM-DD hh:mm');
-      result.labels.push(formattedDate);
     }
     return result;
   }
