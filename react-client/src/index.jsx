@@ -28,9 +28,7 @@ class App extends React.Component {
 
   onInputChange(e) {
     const name = e.target.name;
-    this.setState({
-      [name]: e.target.value
-    });
+    this.setState({[name]: e.target.value});
   }
 
   handleSignout() {
@@ -89,17 +87,18 @@ class App extends React.Component {
   handleGetRequest(){
     if (this.state.address === '') {
       alert('Please enter an address!');
+    } else {
+      $.get({
+        url: `http://jobcoin.projecticeland.net/dinosaur/api/addresses/${this.state.address}`,
+        success: function (data) {
+          let transformed = this.transformDataForChart(data);
+          this.setState({chartData: transformed, userData: data, loggedIn: true});
+        }.bind(this),
+        error: function (err) {
+          console.log('err in get request', err)
+        }
+      })
     }
-    $.get({
-      url: `http://jobcoin.projecticeland.net/dinosaur/api/addresses/${this.state.address}`,
-      success: function (data) {
-        let transformed = this.transformDataForChart(data);
-        this.setState({chartData: transformed, userData: data, loggedIn: true});
-      }.bind(this),
-      error: function (err) {
-        console.log('err in get request', err)
-      }
-    })
   };
 
   render () {

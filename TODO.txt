@@ -1,4 +1,5 @@
 TODO:
 
-- style up css, format the layout
 - fix chart axes, labels, options
+- make signout into a button
+- find and fix createClass error in console (?? from react chart??)

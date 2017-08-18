@@ -3,8 +3,7 @@ import ChartComponent from './Chart';
 
 const Dashboard = (props)=>{
   return (
-    <div>
-
+    <div className="container-fluid dashboard">
       <nav className="navbar navbar-default">
         <div className="container-fluid">
           <ul className="nav navbar-nav">
@@ -39,7 +38,6 @@ const Dashboard = (props)=>{
           </div>
         </div>
       </div>
-
     </div>
   )
 };
