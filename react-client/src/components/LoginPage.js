@@ -13,8 +13,7 @@ class LoginPage extends React.Component {
       userInformation: '',
       sendingUserName: '',
       sendingCoinNumber: '',
-      userData: [1,2,3,4,5,6],
-      userInfor: [10, 20, 30 , 40]
+      userData: {},
     }
 
     this.initialState = this.state;
@@ -23,6 +22,7 @@ class LoginPage extends React.Component {
     this.handleUserChange = this.handleUserChange.bind(this);
     this.handleSendCoin = this.handleSendCoin.bind(this);
     this.handleCoinChange = this.handleCoinChange.bind(this);
+    this.transformDataForChart = this.transformDataForChart.bind(this);
   }
 
   handleInputChange(e){
@@ -58,23 +58,55 @@ class LoginPage extends React.Component {
     })
   }
 
-  getDataForChart(){
+  transformDataForChart(dataset){
+    let result = {
+      labels: [],   //x labels transactions (timestamps)
+      datasets: [
+        {
+          label: `Amount vs Time for ${this.state.value}`,
+          fill: true,
+          pointHoverRadius: 5,
+          pointRadius: 1,
+          pointHitRadius: 10,
+          data: [], //y values $(amount)
+          spanGaps: false,
+        }
+      ]
+    };
+    // console.log('data in transform data func', dataset)
 
+    let amount = Number.parseInt(dataset.transactions[0].amount);  //intial amount
+    // console.log('initial amount', amount);
+    for (var i = 1; i < dataset.transactions.length; i++) {
+      //sending (subract from amount)
+      if (dataset.transactions[i].fromAddress === this.state.value) {
+        amount -= Number.parseInt(dataset.transactions[i].amount);
+      //receiving (add to amount)
+      } else {
+        amount += Number.parseInt(dataset.transactions[i].amount);
+      }
+      //add amount to result (y axis)
+      result.datasets[0].data.push(amount);
+      //add timestamps to result (x axis)
+      result.labels.push(dataset.transactions[i].timestamp);
+    }
+    console.log(result);
+    return result;
   }
 
   handleGetRequest(){
     $.get({
       url: `http://jobcoin.projecticeland.net/dinosaur/api/addresses/${this.state.value}`,
-      success: function (data) {
-        this.setState({userInformation: data})
+      success: async function (data) {
+        // console.log('data back from ajax', data);
+        let transformed = this.transformDataForChart(data);
 
-        console.log(data);
+        await this.setState({userData: transformed})
       }.bind(this),
       error: function (err) {
         console.log('err in get request', err)
       }
     })
- // <Link to="/UserPage">Submit</Link>
   };
 
   render () {
