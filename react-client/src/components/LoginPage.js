@@ -4,6 +4,7 @@ import Route from './Routes'
 import ReactDOM from 'react-dom';
 import ChartComponent from './Chart';
 import {Link} from 'react-router-dom';
+import moment from 'moment';
 
 class LoginPage extends React.Component {
   constructor(props) {
@@ -93,9 +94,17 @@ class LoginPage extends React.Component {
       //add amount to result (y axis)
       result.datasets[0].data.push(amount);
       //add timestamps to result (x axis)
-      result.labels.push(dataset.transactions[i].timestamp);
+
+      // console.log('converted timestamp', moment(dataset.transactions[i].timestamp));
+      // let formatted = moment(dataset.transactions[i].timestamp, 'YYYY-MM-DD hh:mm:ss')._d;
+      
+      // console.log('formmated', formatted);
+
+      // result.labels.push(dataset.transactions[i].timestamp);
+      result.labels.push(moment(dataset.transactions[i].timestamp, 'YYYY-MM-DD hh:mm:ss')._d);
     }
-    console.log(result);
+
+    // console.log(result);
     return result;
   }
 
@@ -103,9 +112,8 @@ class LoginPage extends React.Component {
     $.get({
       url: `http://jobcoin.projecticeland.net/dinosaur/api/addresses/${this.state.address}`,
       success: function (data) {
-        // console.log('data back from ajax', data);
         let transformed = this.transformDataForChart(data);
-        console.log('transformed', transformed);
+        // console.log('transformed', transformed);
         this.setState({chartData: transformed, userData: data, loggedIn: true});
       }.bind(this),
       error: function (err) {
