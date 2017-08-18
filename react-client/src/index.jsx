@@ -46,18 +46,18 @@ class App extends React.Component {
     $.post({
       url: "http://jobcoin.projecticeland.net/dinosaur/api/transactions",
       data: data,
-      success: (success)=>{
+      success: (success) => {
         console.log('sent coins', success);
         this.handleGetRequest();
         this.setState({sendingUserName: '', sendingCoinAmount: ''});
       }, 
-      error: (error)=>{
+      error: (error) => {
         console.log('ERROR', error)
       }
     })
   }
 
-  transformDataForChart(dataset){
+  transformDataForChart(dataset) {
     let result = {
       labels: [],   //x labels transactions (timestamps)
       datasets: [
@@ -66,20 +66,19 @@ class App extends React.Component {
         }
       ]
     };
-    if (dataset.transactions.length !== 0) {
-      let amount = Number.parseInt(dataset.transactions[0].amount);  //intial amount
-      for (var i = 1; i < dataset.transactions.length; i++) {
+    let len = dataset.transactions.length;
+    if (len !== 0) {
+      let amount = Number.parseInt(dataset.transactions[0].amount);
+      for (var i = 1; i < len; i++) {
         //sending (subract from amount)
-        if (dataset.transactions[i].fromAddress === this.state.address) {
-          amount -= Number.parseInt(dataset.transactions[i].amount);
+        let transaction = dataset.transactions[i];
+        if (transaction.fromAddress === this.state.address) {
+          amount -= Number.parseInt(transaction.amount);
         //receiving (add to amount)
         } else {
-          amount += Number.parseInt(dataset.transactions[i].amount);
+          amount += Number.parseInt(transaction.amount);
         }
-        //add amount to result (y axis)
         result.datasets[0].data.push(amount);
-        //add timestamps to result (x axis)
-
         let formattedDate = moment(dataset.transactions[i].timestamp).format('YYYY-MM-DD hh:mm');
         result.labels.push(formattedDate);
       }
@@ -88,12 +87,13 @@ class App extends React.Component {
   }
 
   handleGetRequest(){
-    console.log('getting request')
+    if (this.state.address === '') {
+      alert('Please enter an address!');
+    }
     $.get({
       url: `http://jobcoin.projecticeland.net/dinosaur/api/addresses/${this.state.address}`,
       success: function (data) {
         let transformed = this.transformDataForChart(data);
-        // console.log('transformed', transformed);
         this.setState({chartData: transformed, userData: data, loggedIn: true});
       }.bind(this),
       error: function (err) {
