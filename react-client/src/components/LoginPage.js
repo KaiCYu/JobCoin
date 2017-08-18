@@ -54,9 +54,9 @@ class LoginPage extends React.Component {
       data: data,
       success: (success)=>{
         console.log('sent coins', success);
-        //send for new transactions?
         this.handleGetRequest();
-        //update state 
+        //update state
+        this.setState({sendingUserName: '', sendingCoinNumber: ''});
       }, 
       error: (error)=>{
         console.log('ERROR', error)

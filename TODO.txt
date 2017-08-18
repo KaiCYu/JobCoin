@@ -2,7 +2,5 @@ TODO:
 
 - format timestamps to regular time
 - style up css, format the layout
-- clear form input when sending coins
 - separate out components
-- update chart when sending out money
 - refactor handle change functions 
