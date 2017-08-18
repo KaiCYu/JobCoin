@@ -10,10 +10,11 @@ class LoginPage extends React.Component {
     super(props);
     this.state = { 
       value: '',
-      userInformation: '',
+      loggedIn: false,
       sendingUserName: '',
       sendingCoinNumber: '',
       userData: {},
+      chartData: {},
     }
 
     this.initialState = this.state;
@@ -73,7 +74,6 @@ class LoginPage extends React.Component {
         }
       ]
     };
-    // console.log('data in transform data func', dataset)
 
     let amount = Number.parseInt(dataset.transactions[0].amount);  //intial amount
     // console.log('initial amount', amount);
@@ -97,11 +97,11 @@ class LoginPage extends React.Component {
   handleGetRequest(){
     $.get({
       url: `http://jobcoin.projecticeland.net/dinosaur/api/addresses/${this.state.value}`,
-      success: async function (data) {
+      success: function (data) {
         // console.log('data back from ajax', data);
         let transformed = this.transformDataForChart(data);
-
-        await this.setState({userData: transformed})
+        console.log('transformed', transformed);
+        this.setState({chartData: transformed, userData: data, loggedIn: true});
       }.bind(this),
       error: function (err) {
         console.log('err in get request', err)
@@ -111,7 +111,7 @@ class LoginPage extends React.Component {
 
   render () {
       //not logged in
-      { if(this.state.userInformation === ''){
+      { if(!this.state.loggedIn){
         return (
           <div>
             <h3> Welcome! Sign in with your JobCoin Address </h3>
@@ -128,7 +128,7 @@ class LoginPage extends React.Component {
               <button onClick={this.handleSignout}> Sign Out </button>
               <h1> Welcome User: {this.state.value} </h1>
               <h2> JobCoin Balance </h2>
-              <h2> {this.state.userInformation.balance} </h2>
+              <h2> {this.state.userData.balance} </h2>
             </div>
             <div>
               <h2> Send JobCoin </h2>
@@ -136,8 +136,8 @@ class LoginPage extends React.Component {
               Amount:<input type="text" onChange={this.handleCoinChange} value={this.state.sendingCoinNumber}/>
               <button onClick={this.handleSendCoin}> Send JobCoin </button>
             </div>
-              
-            <ChartComponent chartData={this.state.userInfor} options={this.state.userData}/>
+
+            <ChartComponent chartData={this.state.chartData} options={null}/>
           </div>
         )
       }
