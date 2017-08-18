@@ -7,8 +7,8 @@ import {Line as LineChart} from 'react-chartjs';
 const ChartComponent = (props)=>{
   return (
     <div>
-      {console.log('chart props', props.chartData)}
-      <LineChart data={props.chartData} options={null} width="600" height="250"/> 
+      {/*{console.log('chart props', props.chartData)}*/}
+      <LineChart data={props.chartData} options={null} width="600" height="400"/> 
     </div>
   )
 };

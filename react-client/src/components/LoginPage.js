@@ -53,7 +53,10 @@ class LoginPage extends React.Component {
       url: "http://jobcoin.projecticeland.net/dinosaur/api/transactions",
       data: data,
       success: (success)=>{
-        console.log(success)
+        console.log('sent coins', success);
+        //send for new transactions?
+        this.handleGetRequest();
+        //update state 
       }, 
       error: (error)=>{
         console.log('ERROR', error)
