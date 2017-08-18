@@ -28,38 +28,51 @@ button {
 
 .nav li {
   border-radius: 5px;
-  /*border: 1px solid darkgrey;*/
   padding: 10px 10px;
   margin: 10px;
+}
+
+.col-one {
+  background-color: red;
+}
+
+.col-two {
+  background-color: blue;
 }
 
 .balance {
   border: 1px solid darkgrey;
   border-radius: 5px;
-  float:left;
+  /*float:left;*/
   height: 100px;
   width: 200px;
   display: block;
   padding: 20px;
   text-align: center;
+  margin: 10px;
 }
 
 .sendcoin {
   border: 1px solid darkgrey;
   border-radius: 5px;
-  float:left;
+  /*float:left;*/
   height: 250px;
   width: 200px;
   display: block;
   padding: 20px;
   text-align: center;
+  margin: 10px;
 }
 
+.sendcoin button {
+  margin: 10px;
+}
 
 .chart {
   border: 1px solid darkgrey;
   border-radius: 5px;
-  float: right;
+  /*float: right;*/
   display: block;
-  
+  width: 600px;
+  height: 500px;
 }
