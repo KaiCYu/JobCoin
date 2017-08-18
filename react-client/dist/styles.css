@@ -1,0 +1,65 @@
+body {
+  padding: 20px;
+}
+
+button {
+  border-radius: 5px;
+}
+
+.signin {
+  height: 250px;
+  width: 60%;
+  border: 1px solid darkgrey;
+  border-radius: 5px;
+  padding: 20px;
+  text-align: center;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  overflow: auto;
+}
+
+.topnav {
+  border: 1px solid darkgrey;
+  border-radius: 5px;
+  overflow: hidden;
+  /*background-color: red;*/
+}
+
+.topnav h4 {
+  float: left;
+  padding: 10px 10px;
+  display: block;
+
+}
+
+.topnav button {
+  /*display: block;*/
+  float: right;
+  text-align: center;
+  margin: 10px;
+}
+
+.balance {
+  border: 1px solid darkgrey;
+  border-radius: 5px;
+  float:left;
+  height: 100px;
+  width: 150px;
+  
+}
+
+.sendcoin {
+  border: 1px solid darkgrey;
+  border-radius: 5px;
+  float:left;
+  height: 100px;
+  width: 150px;
+}
+
+.chart {
+  border: 1px solid darkgrey;
+  border-radius: 5px;
+  float: right;
+}

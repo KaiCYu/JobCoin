@@ -4,7 +4,7 @@ import ReactDOM from 'react-dom';
 import moment from 'moment';
 import ChartComponent from './components/Chart';
 import SignIn from './components/SignIn.js';
-import Balance from './components/Balance.js';
+import Dashboard from './components/Dashboard.js';
 
 class App extends React.Component {
   constructor(props) {
@@ -115,7 +115,7 @@ class App extends React.Component {
       //logged in
       } else {
         return (
-          <Balance onInputChange={this.onInputChange} signout={this.handleSignout} sendCoin={this.handleSendCoin} address={this.state.address} userData={this.state.userData} amount={this.state.sendingCoinAmount} destination={this.state.sendingUserName}  chartData={this.state.chartData}/>
+          <Dashboard onInputChange={this.onInputChange} signout={this.handleSignout} sendCoin={this.handleSendCoin} address={this.state.address} userData={this.state.userData} amount={this.state.sendingCoinAmount} destination={this.state.sendingUserName}  chartData={this.state.chartData}/>
         )
       }
     }
